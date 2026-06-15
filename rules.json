@@ -1,0 +1,28 @@
+[
+  {
+    "id": "f0db8c76-7f7b-4b06-b954-d30960921f57",
+    "method": "GET",
+    "sourceUrl": "http://localhost:3000/test",
+    "pathname": "/test",
+    "pathChunks": [
+      "test"
+    ],
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "id": 1,
+      "name": "Sample user",
+      "active": true,
+      "roles": [
+        {
+          "id": "admin",
+          "label": "Administrator"
+        }
+      ]
+    },
+    "createdAt": "2026-06-14T17:32:21.132Z",
+    "updatedAt": "2026-06-14T17:32:21.132Z"
+  }
+]

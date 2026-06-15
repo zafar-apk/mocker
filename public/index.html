@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mocker</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <span class="brand-mark">M</span>
+          <div>
+            <h1>Mocker</h1>
+            <p>Local backend response rules</p>
+          </div>
+        </div>
+
+        <label class="field">
+          <span>Request URL</span>
+          <input id="urlInput" type="url" placeholder="https://api.example.com/users/42/orders">
+        </label>
+
+        <div class="row">
+          <label class="field compact">
+            <span>Method</span>
+            <select id="methodInput">
+              <option>GET</option>
+              <option>POST</option>
+              <option>PUT</option>
+              <option>PATCH</option>
+              <option>DELETE</option>
+            </select>
+          </label>
+          <label class="field compact">
+            <span>Status</span>
+            <input id="statusInput" type="number" min="100" max="599" value="200">
+          </label>
+        </div>
+
+        <section class="panel">
+          <div class="panel-title">Parsed path</div>
+          <div id="pathChips" class="chips empty">Paste a URL to split it into chunks.</div>
+        </section>
+
+        <section class="panel grow">
+          <div class="panel-title">Rules by path</div>
+          <div id="ruleList" class="rule-list"></div>
+        </section>
+      </aside>
+
+      <section class="workspace">
+        <div class="toolbar">
+          <label class="field postfix">
+            <span>Duplicate postfix</span>
+            <input id="postfixInput" value="_copy">
+          </label>
+          <div class="toolbar-actions">
+            <button id="formatBtn" class="secondary" type="button">Format JSON</button>
+            <button id="saveBtn" type="button">Save rule</button>
+          </div>
+        </div>
+
+        <section class="editor-grid">
+          <div class="json-source">
+            <div class="section-head">
+              <h2>Raw JSON</h2>
+              <button id="loadJsonBtn" class="secondary" type="button">Load into editor</button>
+            </div>
+            <textarea id="jsonInput" spellcheck="false">{
+  "id": 1,
+  "name": "Sample user",
+  "active": true,
+  "roles": [
+    {
+      "id": "admin",
+      "label": "Administrator"
+    }
+  ]
+}</textarea>
+            <div id="jsonError" class="error" role="alert"></div>
+          </div>
+
+          <div class="interactive">
+            <div class="section-head">
+              <h2>Interactive JSON</h2>
+              <div class="endpoint-list">
+                <span id="mockUrl" class="mock-url"></span>
+                <span id="proxyUrl" class="mock-url"></span>
+              </div>
+            </div>
+            <div id="jsonTree" class="json-tree"></div>
+          </div>
+        </section>
+      </section>
+    </main>
+    <template id="addFieldTemplate">
+      <form class="add-field">
+        <input name="name" placeholder="field name">
+        <input name="value" placeholder="field value">
+        <button type="submit">Add</button>
+      </form>
+    </template>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
