@@ -278,7 +278,7 @@ h2 {
 
 .rule {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr auto;
   gap: 8px;
   align-items: center;
   width: 100%;
@@ -291,6 +291,12 @@ h2 {
 .rule.disabled {
   background: #f7f9fa;
   opacity: 0.72;
+}
+
+.rule-enabled {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
 }
 
 .rule-main {

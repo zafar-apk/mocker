@@ -326,54 +326,59 @@ function renderJsonTree() {
   els.jsonTree.replaceChildren(renderNode(state.json));
 }
 
+function ruleDisplayName(rule) {
+  return String(rule.name || "").trim() || `${rule.method} ${rule.pathname}`;
+}
+
 function renderRules() {
   if (!state.rules.length) {
     els.ruleList.textContent = "No rules saved yet.";
     return;
   }
 
-  const grouped = new Map();
-  for (const rule of state.rules) {
-    const group = rule.pathChunks?.[0] || "/";
-    grouped.set(group, [...(grouped.get(group) || []), rule]);
-  }
+  const rules = [...state.rules].sort((left, right) => {
+    return ruleDisplayName(left).localeCompare(ruleDisplayName(right), undefined, { sensitivity: "base" });
+  });
+
   const nodes = [];
-  for (const [group, rules] of grouped.entries()) {
-    const heading = document.createElement("div");
-    heading.className = "panel-title";
-    heading.textContent = group;
-    nodes.push(heading);
+  for (const rule of rules) {
+    const item = document.createElement("div");
+    item.className = rule.enabled === false ? "rule disabled" : "rule";
 
-    for (const rule of rules) {
-      const item = document.createElement("div");
-      item.className = rule.enabled === false ? "rule disabled" : "rule";
+    const enabled = document.createElement("input");
+    enabled.className = "rule-enabled";
+    enabled.type = "checkbox";
+    enabled.checked = rule.enabled !== false;
+    enabled.title = enabled.checked ? "Disable rule" : "Enable rule";
+    enabled.setAttribute("aria-label", `${enabled.checked ? "Disable" : "Enable"} ${ruleDisplayName(rule)}`);
+    enabled.addEventListener("click", (event) => event.stopPropagation());
+    enabled.addEventListener("change", () => updateRule(rule, { enabled: enabled.checked }));
 
-      const button = document.createElement("button");
-      button.className = "rule-main";
-      button.type = "button";
-      const title = document.createElement("strong");
-      title.textContent = rule.name || `${rule.method} ${rule.pathname}`;
-      const route = document.createElement("span");
-      route.textContent = `${rule.enabled === false ? "Disabled / " : ""}${rule.method} ${rule.pathname}`;
-      const endpoint = document.createElement("span");
-      endpoint.textContent = `${location.origin}/proxy?url=${encodeURIComponent(rule.sourceUrl)}`;
-      button.append(title, route, endpoint);
-      button.addEventListener("click", () => loadRule(rule));
+    const button = document.createElement("button");
+    button.className = "rule-main";
+    button.type = "button";
+    const title = document.createElement("strong");
+    title.textContent = ruleDisplayName(rule);
+    const route = document.createElement("span");
+    route.textContent = `${rule.enabled === false ? "Disabled / " : ""}${rule.method} ${rule.pathname}`;
+    const endpoint = document.createElement("span");
+    endpoint.textContent = `${location.origin}/proxy?url=${encodeURIComponent(rule.sourceUrl)}`;
+    button.append(title, route, endpoint);
+    button.addEventListener("click", () => loadRule(rule));
 
-      const remove = document.createElement("button");
-      remove.className = "icon-btn danger";
-      remove.type = "button";
-      remove.textContent = "×";
-      remove.title = "Delete rule";
-      remove.addEventListener("click", async () => {
-        await fetch(`/api/rules/${rule.id}`, { method: "DELETE" });
-        if (state.activeRuleId === rule.id) state.activeRuleId = null;
-        await fetchRules();
-      });
+    const remove = document.createElement("button");
+    remove.className = "icon-btn danger";
+    remove.type = "button";
+    remove.textContent = "×";
+    remove.title = "Delete rule";
+    remove.addEventListener("click", async () => {
+      await fetch(`/api/rules/${rule.id}`, { method: "DELETE" });
+      if (state.activeRuleId === rule.id) state.activeRuleId = null;
+      await fetchRules();
+    });
 
-      item.append(button, remove);
-      nodes.push(item);
-    }
+    item.append(enabled, button, remove);
+    nodes.push(item);
   }
   els.ruleList.replaceChildren(...nodes);
 }
@@ -479,6 +484,20 @@ async function fetchRequests() {
   const response = await fetch("/api/requests");
   state.requests = await response.json();
   renderRequests();
+}
+
+async function updateRule(rule, changes) {
+  const response = await fetch("/api/rules", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ ...rule, ...changes })
+  });
+  const saved = await response.json();
+  if (state.activeRuleId === saved.id) {
+    els.ruleEnabledInput.checked = saved.enabled !== false;
+    els.ruleNameInput.value = saved.name || "";
+  }
+  await fetchRules();
 }
 
 async function saveRule({ asNew = false } = {}) {
