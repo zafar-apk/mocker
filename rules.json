@@ -1,28 +1,222 @@
 [
   {
-    "id": "f0db8c76-7f7b-4b06-b954-d30960921f57",
+    "id": "c5c3b34d-e41b-4593-9949-7afd83cd4335",
     "method": "GET",
-    "sourceUrl": "http://localhost:3000/test",
-    "pathname": "/test",
+    "sourceUrl": "https://gateway-splus.qat.stg.snoonu.com/api/v1/plans",
+    "pathname": "/api/v1/plans",
     "pathChunks": [
-      "test"
+      "api",
+      "v1",
+      "plans"
     ],
     "status": 200,
     "headers": {
       "content-type": "application/json"
     },
     "body": {
-      "id": 1,
-      "name": "Sample user",
-      "active": true,
-      "roles": [
+      "id": "01987fc4-c5c5-715c-8301-fdb8d5cbf10f",
+      "payment_cycle": [
         {
-          "id": "admin",
-          "label": "Administrator"
+          "id": "01987fc6-61c5-73c3-8493-3dd67b019436",
+          "title": "Monthly",
+          "subtitle": "Free for 30 days",
+          "description": null,
+          "cycle": 0,
+          "monthly_price": 30,
+          "tag": null
+        },
+        {
+          "id": "01987fc7-a9f2-71d8-a1dc-455aebb5736f",
+          "title": "Yearly",
+          "subtitle": "Free for 30 days",
+          "description": "300 QAR billed annually",
+          "cycle": 1,
+          "monthly_price": 25,
+          "tag": "Save 17%"
         }
-      ]
+      ],
+      "benefits": [
+        {
+          "id": "01987fc7-73c3-730b-9bec-dba4b6894c0a",
+          "title": "Restaurants",
+          "title_en": "Restaurants",
+          "subtitle": "Applies to select Restaurant orders",
+          "short_subtitle": "",
+          "description": "Free delivery on restaurant orders of 40 QR or more from select stores. Whether it’s your go-to burger or a new craving, enjoy savings every time.",
+          "banner": "https://images.snoonu.com/quest_images/609ffb44-e904-43cb-bbc3-ce7f34f69fa4_restaurants.png",
+          "icon": "https://images.snoonu.com/quest_images/3251d4f2-d6b2-4479-abe9-29d7378e34fd_restaurants.png?format=webp",
+          "type": 0,
+          "payment_cycles": [
+            0,
+            1
+          ],
+          "tag": null
+        },
+        {
+          "id": "01987fc4-0cda-703d-b1c3-f6d69a0bc3e4",
+          "title": "Grocery",
+          "title_en": "Grocery",
+          "subtitle": "Applies to select Grocery orders",
+          "short_subtitle": "",
+          "description": "Free delivery on Grocery orders of 100 QR, or  60 QR from Snoomart. Whether it's midweek essentials or daily needs, save more every time.",
+          "banner": "https://images.snoonu.com/quest_images/3002f764-9d81-417f-80fc-f80c11505dd6_grocery.png",
+          "icon": "https://images.snoonu.com/quest_images/ee9b7e21-4749-4c0f-bf21-a88ee7f93362_groceries.png?format=webp",
+          "type": 0,
+          "payment_cycles": [
+            0,
+            1
+          ],
+          "tag": null
+        },
+        {
+          "id": "0198e4dd-7fca-7562-917c-a2b0c5e432f6",
+          "title": "Pharmacies",
+          "title_en": "Pharmacies",
+          "subtitle": "Applies to select Pharmacy orders",
+          "short_subtitle": "",
+          "description": "Free delivery on Pharmacy orders of 100 QR, or 60 QR from select stores. Whether it's everyday wellness or last-minute needs, get your essentials hassle-free.",
+          "banner": "https://images.snoonu.com/quest_images/55434667-f7fd-4c77-b9d1-13ad802d8023_pharmacy.png",
+          "icon": "https://images.snoonu.com/quest_images/4c7c1844-1d9f-4684-99a2-ba4ba59c3a9d_pharmacy.png?format=webp",
+          "type": 0,
+          "payment_cycles": [
+            0,
+            1
+          ],
+          "tag": null
+        },
+        {
+          "id": "01987fc3-a1db-7239-ac17-6c5c5a1b18b1",
+          "title": "Market",
+          "title_en": "Market",
+          "subtitle": "Applies to select Market orders",
+          "short_subtitle": "",
+          "description": "Free delivery on Market orders of 200 QR, or 100 QR from select stores. Shop electronics, beauty, pet supplies, and more.",
+          "banner": "https://images.snoonu.com/quest_images/aa3736b2-8309-4afd-8b1e-632fa2a15581_market.png",
+          "icon": "https://images.snoonu.com/quest_images/78185cb9-7220-490b-836c-6cfb4ae0b298_bySnoonu1.png?format=webp",
+          "type": 0,
+          "payment_cycles": [
+            0,
+            1
+          ],
+          "tag": null
+        },
+        {
+          "id": "0198e572-21a1-74d3-bc93-4691e47cce0b",
+          "title": "Flowers & Gifts",
+          "title_en": "Flowers & Gifts",
+          "subtitle": "Applies to select Flowers & Gifts orders",
+          "short_subtitle": "",
+          "description": "Free delivery on Flowers & Gifts orders of 60 QR or more from select stores. Brighten their day with fresh flowers or thoughtful gifts, minus the delivery fee.",
+          "banner": "https://images.snoonu.com/quest_images/8f5f55f1-5b37-4447-a43d-5f7f7e993538_gifting.png",
+          "icon": "https://images.snoonu.com/quest_images/2001cbe2-cc02-494f-bdc8-043e52101868_gifting.png?format=webp",
+          "type": 0,
+          "payment_cycles": [
+            0,
+            1
+          ],
+          "tag": null
+        },
+        {
+          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6",
+          "title": "15% discount on the laundry",
+          "title_en": "15% discount on the laundry",
+          "subtitle": "Get 15% off on laundry services at our partner stores.",
+          "short_subtitle": "15% discount!",
+          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!",
+          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png",
+          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp",
+          "type": 4,
+          "payment_cycles": [
+            0,
+            1
+          ],
+          "tag": null
+        },
+        {
+          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6_copy",
+          "title": "15% discount on the laundry_copy",
+          "title_en": "15% discount on the laundry_copy",
+          "subtitle": "Get 15% off on laundry services at our partner stores._copy",
+          "short_subtitle": "15% discount!_copy",
+          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy",
+          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy",
+          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy",
+          "type": 4,
+          "payment_cycles": [
+            1,
+            2
+          ],
+          "tag": null
+        },
+        {
+          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6_copy_copy2",
+          "title": "15% discount on the laundry_copy_copy2",
+          "title_en": "15% discount on the laundry_copy_copy2",
+          "subtitle": "Get 15% off on laundry services at our partner stores._copy_copy2",
+          "short_subtitle": "15% discount!_copy_copy2",
+          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy_copy2",
+          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy_copy2",
+          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy_copy2",
+          "type": 4,
+          "payment_cycles": [
+            2,
+            3
+          ],
+          "tag": null
+        },
+        {
+          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6_copy_copy2_copy3",
+          "title": "15% discount on the laundry_copy_copy2_copy3",
+          "title_en": "15% discount on the laundry_copy_copy2_copy3",
+          "subtitle": "Get 15% off on laundry services at our partner stores._copy_copy2_copy3",
+          "short_subtitle": "15% discount!_copy_copy2_copy3",
+          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy_copy2_copy3",
+          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy_copy2_copy3",
+          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy_copy2_copy3",
+          "type": 4,
+          "payment_cycles": [
+            3,
+            4
+          ],
+          "tag": null
+        },
+        {
+          "id": 123123123,
+          "title": "15% discount on the laundry_copy_copy2_copy3_copy",
+          "title_en": "15% discount on the laundry_copy_copy2_copy3_copy",
+          "subtitle": "Get 15% off on laundry services at our partner stores._copy_copy2_copy3_copy",
+          "short_subtitle": "15% discount!_copy_copy2_copy3_copy",
+          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy_copy2_copy3_copy",
+          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy_copy2_copy3_copy",
+          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy_copy2_copy3_copy",
+          "type": 4,
+          "payment_cycles": [
+            4,
+            5
+          ],
+          "tag": null
+        }
+      ],
+      "is_free_trial_eligible": true,
+      "descriptions": {
+        "plans_cancel_anytime": "Try 30 days free — cancel anytime",
+        "plans_next_button_label": "Start 30-Day Free Trial",
+        "checkout_yearly_plan_description": "Your free trial lasts until 15 July 2026. After that, 300 QAR/year — you can cancel anytime",
+        "checkout_monthly_plan_description": "Your free trial lasts until 15 July 2026. After that, 30 QAR/month — you can cancel anytime",
+        "checkout_payment_reminder": "No charges today — billing starts after your 30-day trial, we’ll remind you first",
+        "checkout_pay_button_label": "Start Free Trial",
+        "plan_selection_page_banner_text": "Endless Free\nDelivery on\nSelect Brands",
+        "possible_savings_title": "",
+        "possible_savings_subtitle": "",
+        "brand_carousel_title": "Free delivery from brands you love",
+        "brand_carousel_subtitle": "1,000+ brands to choose from",
+        "cart_checkout_prompt_accept_button_label": "Get a 30-Day Free Trial",
+        "cart_checkout_prompt_cancel_anytime": "30 QAR/month after the free trial — cancel anytime"
+      },
+      "is_offers_eligible": true,
+      "free_trial_duration_in_days": 30
     },
-    "createdAt": "2026-06-14T17:32:21.132Z",
-    "updatedAt": "2026-06-14T17:32:21.132Z"
+    "createdAt": "2026-06-15T07:12:39.161Z",
+    "updatedAt": "2026-06-15T07:12:39.161Z"
   }
 ]

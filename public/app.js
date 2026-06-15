@@ -1,19 +1,27 @@
 const state = {
   rules: [],
+  requests: [],
   activeRuleId: null,
+  activeRequestId: null,
+  collapsedPaths: new Set(),
   parsedUrl: null,
   json: null
 };
 
 const els = {
   urlInput: document.querySelector("#urlInput"),
+  ruleNameInput: document.querySelector("#ruleNameInput"),
+  ruleEnabledInput: document.querySelector("#ruleEnabledInput"),
   methodInput: document.querySelector("#methodInput"),
   statusInput: document.querySelector("#statusInput"),
   pathChips: document.querySelector("#pathChips"),
   ruleList: document.querySelector("#ruleList"),
-  postfixInput: document.querySelector("#postfixInput"),
+  requestList: document.querySelector("#requestList"),
+  requestCount: document.querySelector("#requestCount"),
+  clearRequestsBtn: document.querySelector("#clearRequestsBtn"),
   formatBtn: document.querySelector("#formatBtn"),
   saveBtn: document.querySelector("#saveBtn"),
+  saveAsNewBtn: document.querySelector("#saveAsNewBtn"),
   loadJsonBtn: document.querySelector("#loadJsonBtn"),
   jsonInput: document.querySelector("#jsonInput"),
   jsonError: document.querySelector("#jsonError"),
@@ -113,13 +121,28 @@ function parseLooseValue(value) {
   }
 }
 
-function uniquify(value, postfix) {
-  if (typeof value === "string") return `${value}${postfix}`;
-  if (typeof value === "number") return value + 1;
-  if (Array.isArray(value)) return value.map((item) => uniquify(item, postfix));
+function nextCopyNumber(array) {
+  let max = 0;
+  const scan = (value) => {
+    if (typeof value === "string") {
+      const match = value.match(/_copy(\d+)$/);
+      if (match) max = Math.max(max, Number(match[1]));
+      return;
+    }
+    if (Array.isArray(value)) value.forEach(scan);
+    else if (value && typeof value === "object") Object.values(value).forEach(scan);
+  };
+  array.forEach(scan);
+  return max + 1;
+}
+
+function uniquify(value, copyNumber) {
+  if (typeof value === "string") return `${value.replace(/_copy\d+$/, "")}_copy${copyNumber}`;
+  if (typeof value === "number") return value;
+  if (Array.isArray(value)) return value.map((item) => uniquify(item, copyNumber));
   if (value && typeof value === "object") {
     return Object.fromEntries(
-      Object.entries(value).map(([key, item]) => [key, uniquify(item, postfix)])
+      Object.entries(value).map(([key, item]) => [key, uniquify(item, copyNumber)])
     );
   }
   return value;
@@ -127,6 +150,26 @@ function uniquify(value, postfix) {
 
 function cloneForDuplicate(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function pathKey(path) {
+  return JSON.stringify(path);
+}
+
+function resetCollapsedPaths() {
+  state.collapsedPaths.clear();
+}
+
+function chunksForPath(pathname) {
+  return (pathname || "/").split("/").filter(Boolean);
+}
+
+function formatRequestTime(value) {
+  return new Intl.DateTimeFormat(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  }).format(new Date(value));
 }
 
 function inputForKey(key, parentPath) {
@@ -205,15 +248,32 @@ function renderNode(value, path = [], key = null, parentPath = []) {
   if (!value || typeof value !== "object") return primitiveEditor(value, path, key, parentPath);
 
   const wrapper = document.createElement("div");
-  wrapper.className = "node";
+  const isCollapsed = state.collapsedPaths.has(pathKey(path));
+  wrapper.className = isCollapsed ? "node collapsed" : "node";
 
   const head = document.createElement("div");
   head.className = "node-head";
+
+  const toggle = document.createElement("button");
+  toggle.className = "icon-btn node-toggle";
+  toggle.type = "button";
+  toggle.textContent = isCollapsed ? ">" : "v";
+  toggle.title = isCollapsed ? "Expand" : "Collapse";
+  toggle.setAttribute("aria-label", isCollapsed ? "Expand object" : "Collapse object");
+  toggle.setAttribute("aria-expanded", String(!isCollapsed));
+  toggle.addEventListener("click", () => {
+    const keyPath = pathKey(path);
+    if (state.collapsedPaths.has(keyPath)) state.collapsedPaths.delete(keyPath);
+    else state.collapsedPaths.add(keyPath);
+    renderJsonTree();
+  });
+  head.append(toggle);
+
   if (key !== null && !Array.isArray(getValue(parentPath))) head.append(inputForKey(String(key), parentPath));
 
   const title = document.createElement("span");
   title.className = "node-title";
-  title.textContent = Array.isArray(value) ? `Array (${value.length})` : "Object";
+  title.textContent = Array.isArray(value) ? `Array (${value.length})` : `Object (${Object.keys(value).length})`;
 
   const remove = document.createElement("button");
   remove.className = "icon-btn danger";
@@ -225,6 +285,7 @@ function renderNode(value, path = [], key = null, parentPath = []) {
 
   head.append(title, remove);
   wrapper.append(head);
+  if (isCollapsed) return wrapper;
 
   const children = document.createElement("div");
   children.className = "children";
@@ -238,7 +299,7 @@ function renderNode(value, path = [], key = null, parentPath = []) {
     duplicate.addEventListener("click", () => {
       updateAtPath(path, (array) => {
         const last = array.at(-1);
-        const next = last === undefined ? {} : uniquify(cloneForDuplicate(last), els.postfixInput.value || "_copy");
+        const next = last === undefined ? {} : uniquify(cloneForDuplicate(last), nextCopyNumber(array));
         return [...array, next];
       });
     });
@@ -285,16 +346,18 @@ function renderRules() {
 
     for (const rule of rules) {
       const item = document.createElement("div");
-      item.className = "rule";
+      item.className = rule.enabled === false ? "rule disabled" : "rule";
 
       const button = document.createElement("button");
       button.className = "rule-main";
       button.type = "button";
       const title = document.createElement("strong");
-      title.textContent = `${rule.method} ${rule.pathname}`;
+      title.textContent = rule.name || `${rule.method} ${rule.pathname}`;
+      const route = document.createElement("span");
+      route.textContent = `${rule.enabled === false ? "Disabled / " : ""}${rule.method} ${rule.pathname}`;
       const endpoint = document.createElement("span");
       endpoint.textContent = `${location.origin}/proxy?url=${encodeURIComponent(rule.sourceUrl)}`;
-      button.append(title, endpoint);
+      button.append(title, route, endpoint);
       button.addEventListener("click", () => loadRule(rule));
 
       const remove = document.createElement("button");
@@ -315,9 +378,53 @@ function renderRules() {
   els.ruleList.replaceChildren(...nodes);
 }
 
+function renderRequests() {
+  els.requestCount.textContent = state.requests.length
+    ? `${state.requests.length} captured`
+    : "Watching proxy and mock traffic";
+
+  if (!state.requests.length) {
+    els.requestList.textContent = "No requests captured yet.";
+    return;
+  }
+
+  const nodes = state.requests.map((request) => {
+    const item = document.createElement("button");
+    item.className = request.id === state.activeRequestId ? "request-item active" : "request-item";
+    item.type = "button";
+
+    const head = document.createElement("span");
+    head.className = "request-head";
+    const method = document.createElement("strong");
+    method.textContent = request.method;
+    const status = document.createElement("span");
+    status.className = request.status >= 400 ? "request-status error-status" : "request-status";
+    status.textContent = request.status || "";
+    head.append(method, status);
+
+    const path = document.createElement("span");
+    path.className = "request-path";
+    path.textContent = request.pathname || "/";
+
+    const meta = document.createElement("span");
+    meta.className = "request-meta";
+    meta.textContent = `${request.mocked ? "mocked" : "upstream"} / ${formatRequestTime(request.createdAt)}`;
+
+    item.append(head, path, meta);
+    item.addEventListener("click", () => loadRequest(request));
+    return item;
+  });
+
+  els.requestList.replaceChildren(...nodes);
+}
+
 function loadRule(rule) {
   state.activeRuleId = rule.id;
+  state.activeRequestId = null;
+  resetCollapsedPaths();
   els.urlInput.value = rule.sourceUrl;
+  els.ruleNameInput.value = rule.name || "";
+  els.ruleEnabledInput.checked = rule.enabled !== false;
   els.methodInput.value = rule.method;
   els.statusInput.value = rule.status;
   state.parsedUrl = {
@@ -329,6 +436,37 @@ function loadRule(rule) {
   syncTextarea();
   renderParsedUrl();
   renderJsonTree();
+  renderRequests();
+}
+
+function loadRequest(request) {
+  const sourceUrl = request.sourceUrl || `${location.origin}${request.pathname || "/"}`;
+  let parsed;
+  try {
+    parsed = parseRequestUrl(sourceUrl);
+  } catch {
+    parsed = null;
+  }
+
+  state.activeRuleId = request.ruleId || null;
+  state.activeRequestId = request.id;
+  resetCollapsedPaths();
+  els.urlInput.value = sourceUrl;
+  els.ruleNameInput.value = "";
+  els.ruleEnabledInput.checked = true;
+  els.methodInput.value = request.method;
+  els.statusInput.value = request.status || 200;
+  state.parsedUrl = {
+    sourceUrl,
+    origin: parsed?.origin || "",
+    pathname: request.pathname || parsed?.pathname || "/",
+    chunks: request.pathChunks || chunksForPath(request.pathname || parsed?.pathname)
+  };
+  state.json = request.responseBody ?? {};
+  syncTextarea();
+  renderParsedUrl();
+  renderJsonTree();
+  renderRequests();
 }
 
 async function fetchRules() {
@@ -337,7 +475,13 @@ async function fetchRules() {
   renderRules();
 }
 
-async function saveRule() {
+async function fetchRequests() {
+  const response = await fetch("/api/requests");
+  state.requests = await response.json();
+  renderRequests();
+}
+
+async function saveRule({ asNew = false } = {}) {
   const parsed = parseRequestUrl(els.urlInput.value);
   const body = readJsonFromTextarea();
   if (!parsed || body === undefined) return;
@@ -345,7 +489,9 @@ async function saveRule() {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({
-      id: state.activeRuleId,
+      id: asNew ? null : state.activeRuleId,
+      name: els.ruleNameInput.value,
+      enabled: els.ruleEnabledInput.checked,
       method: els.methodInput.value,
       sourceUrl: parsed.sourceUrl,
       pathname: parsed.pathname,
@@ -357,6 +503,12 @@ async function saveRule() {
   const saved = await response.json();
   state.activeRuleId = saved.id;
   await fetchRules();
+}
+
+async function clearRequests() {
+  await fetch("/api/requests", { method: "DELETE" });
+  state.activeRequestId = null;
+  await fetchRequests();
 }
 
 els.urlInput.addEventListener("input", () => {
@@ -372,6 +524,7 @@ els.loadJsonBtn.addEventListener("click", () => {
   const next = readJsonFromTextarea();
   if (next === undefined) return;
   state.json = next;
+  resetCollapsedPaths();
   renderJsonTree();
 });
 
@@ -383,8 +536,12 @@ els.formatBtn.addEventListener("click", () => {
   renderJsonTree();
 });
 
-els.saveBtn.addEventListener("click", saveRule);
+els.saveBtn.addEventListener("click", () => saveRule());
+els.saveAsNewBtn.addEventListener("click", () => saveRule({ asNew: true }));
+els.clearRequestsBtn.addEventListener("click", clearRequests);
 
 state.json = readJsonFromTextarea();
 renderJsonTree();
 fetchRules();
+fetchRequests();
+setInterval(fetchRequests, 2000);
