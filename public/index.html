@@ -22,6 +22,11 @@
           <input id="urlInput" type="url" placeholder="https://api.example.com/users/42/orders">
         </label>
 
+        <label class="field">
+          <span>Rule name</span>
+          <input id="ruleNameInput" type="text" placeholder="Happy path, empty state, expired">
+        </label>
+
         <div class="row">
           <label class="field compact">
             <span>Method</span>
@@ -39,9 +44,25 @@
           </label>
         </div>
 
+        <label class="check-field">
+          <input id="ruleEnabledInput" type="checkbox" checked>
+          <span>Rule enabled</span>
+        </label>
+
         <section class="panel">
           <div class="panel-title">Parsed path</div>
           <div id="pathChips" class="chips empty">Paste a URL to split it into chunks.</div>
+        </section>
+
+        <section class="panel monitor-panel">
+          <div class="panel-head">
+            <div>
+              <div class="panel-title">Request monitor</div>
+              <div id="requestCount" class="panel-meta">Watching proxy and mock traffic</div>
+            </div>
+            <button id="clearRequestsBtn" class="secondary small-btn" type="button">Clear</button>
+          </div>
+          <div id="requestList" class="request-list"></div>
         </section>
 
         <section class="panel grow">
@@ -52,12 +73,9 @@
 
       <section class="workspace">
         <div class="toolbar">
-          <label class="field postfix">
-            <span>Duplicate postfix</span>
-            <input id="postfixInput" value="_copy">
-          </label>
           <div class="toolbar-actions">
             <button id="formatBtn" class="secondary" type="button">Format JSON</button>
+            <button id="saveAsNewBtn" class="secondary" type="button">Save as new</button>
             <button id="saveBtn" type="button">Save rule</button>
           </div>
         </div>
