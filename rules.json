@@ -1,6 +1,8 @@
 [
   {
-    "id": "c5c3b34d-e41b-4593-9949-7afd83cd4335",
+    "id": "84fb3373-296d-41e6-9fb5-7cba2f47471f",
+    "name": "2 discount benefits rule",
+    "enabled": false,
     "method": "GET",
     "sourceUrl": "https://gateway-splus.qat.stg.snoonu.com/api/v1/plans",
     "pathname": "/api/v1/plans",
@@ -117,14 +119,14 @@
           "tag": null
         },
         {
-          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6",
-          "title": "15% discount on the laundry",
-          "title_en": "15% discount on the laundry",
-          "subtitle": "Get 15% off on laundry services at our partner stores.",
-          "short_subtitle": "15% discount!",
-          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!",
-          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png",
-          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp",
+          "id": "sdfdsfdsg3324234",
+          "title": "50% off snoo send",
+          "title_en": "50% off snoo send",
+          "subtitle": "Applies to select 50% off snoo send",
+          "short_subtitle": "",
+          "description": "50% off snoo send description",
+          "banner": "https://images.snoonu.com/quest_images/8f5f55f1-5b37-4447-a43d-5f7f7e993538_gifting.png_copy1",
+          "icon": "https://images.snoonu.com/quest_images/2001cbe2-cc02-494f-bdc8-043e52101868_gifting.png?format=webp_copy1",
           "type": 4,
           "payment_cycles": [
             0,
@@ -133,66 +135,18 @@
           "tag": null
         },
         {
-          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6_copy",
-          "title": "15% discount on the laundry_copy",
-          "title_en": "15% discount on the laundry_copy",
-          "subtitle": "Get 15% off on laundry services at our partner stores._copy",
-          "short_subtitle": "15% discount!_copy",
-          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy",
-          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy",
-          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy",
+          "id": "sdfdsfdsg3324234_copy2",
+          "title": "50% off snoo send_copy2",
+          "title_en": "50% off snoo send_copy2",
+          "subtitle": "Applies to select 50% off snoo send_copy2",
+          "short_subtitle": "",
+          "description": "50% off snoo send description_copy2",
+          "banner": "https://images.snoonu.com/quest_images/8f5f55f1-5b37-4447-a43d-5f7f7e993538_gifting.png_copy2",
+          "icon": "https://images.snoonu.com/quest_images/2001cbe2-cc02-494f-bdc8-043e52101868_gifting.png?format=webp_copy2",
           "type": 4,
           "payment_cycles": [
-            1,
-            2
-          ],
-          "tag": null
-        },
-        {
-          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6_copy_copy2",
-          "title": "15% discount on the laundry_copy_copy2",
-          "title_en": "15% discount on the laundry_copy_copy2",
-          "subtitle": "Get 15% off on laundry services at our partner stores._copy_copy2",
-          "short_subtitle": "15% discount!_copy_copy2",
-          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy_copy2",
-          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy_copy2",
-          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy_copy2",
-          "type": 4,
-          "payment_cycles": [
-            2,
-            3
-          ],
-          "tag": null
-        },
-        {
-          "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6_copy_copy2_copy3",
-          "title": "15% discount on the laundry_copy_copy2_copy3",
-          "title_en": "15% discount on the laundry_copy_copy2_copy3",
-          "subtitle": "Get 15% off on laundry services at our partner stores._copy_copy2_copy3",
-          "short_subtitle": "15% discount!_copy_copy2_copy3",
-          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy_copy2_copy3",
-          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy_copy2_copy3",
-          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy_copy2_copy3",
-          "type": 4,
-          "payment_cycles": [
-            3,
-            4
-          ],
-          "tag": null
-        },
-        {
-          "id": 123123123,
-          "title": "15% discount on the laundry_copy_copy2_copy3_copy",
-          "title_en": "15% discount on the laundry_copy_copy2_copy3_copy",
-          "subtitle": "Get 15% off on laundry services at our partner stores._copy_copy2_copy3_copy",
-          "short_subtitle": "15% discount!_copy_copy2_copy3_copy",
-          "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!_copy_copy2_copy3_copy",
-          "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png_copy_copy2_copy3_copy",
-          "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp_copy_copy2_copy3_copy",
-          "type": 4,
-          "payment_cycles": [
-            4,
-            5
+            0,
+            1
           ],
           "tag": null
         }
@@ -216,7 +170,523 @@
       "is_offers_eligible": true,
       "free_trial_duration_in_days": 30
     },
-    "createdAt": "2026-06-15T07:12:39.161Z",
-    "updatedAt": "2026-06-15T07:12:39.161Z"
+    "createdAt": "2026-06-15T08:24:06.011Z",
+    "updatedAt": "2026-06-15T09:01:23.510Z"
+  },
+  {
+    "id": "d8958a63-8a07-4fcc-8a20-3137efe55137",
+    "name": "Snoosend Delivery options BANNER",
+    "enabled": true,
+    "method": "POST",
+    "sourceUrl": "https://snoodelivery-gateway.qat.stg.snoonu.com/api/v1/delivery/estimate",
+    "pathname": "/api/v1/delivery/estimate",
+    "pathChunks": [
+      "api",
+      "v1",
+      "delivery",
+      "estimate"
+    ],
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "status": "SUCCESS",
+      "message": "",
+      "error": null,
+      "data": {
+        "merchant_id": 7203,
+        "total_price": 25,
+        "discounted_price": 20,
+        "is_discount_applied": true,
+        "estimated_drop_off_time": "2026-06-17T15:00:29.8097326",
+        "estimated_pickup_time": "2026-06-17T14:35:32.3096945",
+        "formatted_estimated_drop_off_time": "Deliver Today 03:00 PM",
+        "formatted_estimated_pickup_time": "Pick up Today 02:35 PM",
+        "item_tags": [
+          "Documents",
+          "Food",
+          "Personal things",
+          "Clothes",
+          "Gift",
+          "Flowers"
+        ],
+        "promocode": null,
+        "order_tips": {
+          "default_tip": 0,
+          "max_tip_amount": 200,
+          "tips": [
+            {
+              "amount": 0
+            },
+            {
+              "amount": 5
+            },
+            {
+              "amount": 10
+            },
+            {
+              "amount": 15
+            },
+            {
+              "amount": -1
+            }
+          ]
+        },
+        "estimated_polyline": "udqzCcy_yH~a@wQkEyPxJmGkYaw@`m@sYjfBse@jqIknAb{Bs}@|_AcAhCax@}h@wtBqPzCaH_RuO[",
+        "s_plus": {
+          "is_discount_eligible": false,
+          "message": "Get 15% discount with Snoonu Plus",
+          "is_subscribed": false
+        }
+      },
+      "is_success": true
+    },
+    "createdAt": "2026-06-18T16:53:00.768Z",
+    "updatedAt": "2026-06-18T16:53:00.768Z"
+  },
+  {
+    "id": "df1adb0b-cee5-4a57-b220-8ec301065d6a",
+    "name": "Tarriffs splus",
+    "enabled": true,
+    "method": "POST",
+    "sourceUrl": "https://snoodelivery-gateway.qat.stg.snoonu.com/api/v4/delivery/tariffs",
+    "pathname": "/api/v4/delivery/tariffs",
+    "pathChunks": [
+      "api",
+      "v4",
+      "delivery",
+      "tariffs"
+    ],
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "status": "SUCCESS",
+      "message": null,
+      "error": null,
+      "data": {
+        "tariffs": [
+          {
+            "tariff_id": 3,
+            "tariff_type": "Car",
+            "title": "Car",
+            "description": "Up to 15 kg, 100 x 100 x 75 cm",
+            "detailed_description": "Boxes, suitcases, plants, cakes, fragile",
+            "detailed_subtitle": "By car, up to 15 kg, 100 x 100 x 75 cm, 25 km range",
+            "selected_image": "https://images.snoonu.com/icons/b1330b63-c54e-42d8-a54b-3c0ba8ac7b08_car.png",
+            "unselected_image": "https://images.snoonu.com/icons/b1330b63-c54e-42d8-a54b-3c0ba8ac7b08_car.png",
+            "detailed_image": "https://images.snoonu.com/snoodelivery/tariff/091526ee-b7cb-4a36-93ed-a4e103b61544_car_parametrs1.png",
+            "pickup_eta_in_minutes": "9 mins",
+            "delivery_fee": "25 QAR",
+            "delivery_fee_before_discount": null,
+            "is_splus_discount": true
+          }
+        ],
+        "info_message_list": []
+      },
+      "is_success": true
+    },
+    "createdAt": "2026-06-17T11:44:31.587Z",
+    "updatedAt": "2026-06-18T15:37:04.995Z"
+  },
+  {
+    "id": "ec785103-537a-457b-829c-5822e0dff7c7",
+    "name": "Snoosend BENEFIT",
+    "enabled": true,
+    "method": "GET",
+    "sourceUrl": "https://gateway-splus.qat.stg.snoonu.com/api/v1/customer/subscription/benefits?IncludeCustomerBenefitUsages=true&types=5",
+    "pathname": "/api/v1/customer/subscription/benefits",
+    "pathChunks": [
+      "api",
+      "v1",
+      "customer",
+      "subscription",
+      "benefits"
+    ],
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": [
+      {
+        "id": "019e831e-93a3-74ae-b6ba-d5b7e67ec7b6",
+        "title": "15% discount on the Snoosend",
+        "title_en": "15% discount on the laundry",
+        "subtitle": "Get 15% off on laundry services at our partner stores.",
+        "short_subtitle": "15% discount!",
+        "description": "Enjoy a 15% discount on laundry services at our partner stores. Simply show this offer at checkout to redeem your discount. Don't miss out on this great deal to save on your laundry needs!",
+        "banner": "https://images.snoonu.com/quest_images/30bde06f-456c-4bd5-8b32-4bbdb631895c_NavigationBar.png",
+        "icon": "https://images.snoonu.com/quest_images/068f5ae9-2988-4197-b668-ebb5496a738b_Hamburger1.png?format=webp",
+        "type": 4,
+        "payment_cycles": [
+          0,
+          1
+        ],
+        "tag": null
+      }
+    ],
+    "createdAt": "2026-06-17T12:33:12.409Z",
+    "updatedAt": "2026-06-18T16:52:17.940Z"
+  },
+  {
+    "id": "ea8c915c-285c-4f4a-b029-8ae2961dc0c5",
+    "name": "Splus discount in history",
+    "enabled": true,
+    "method": "GET",
+    "sourceUrl": "https://aggregationgateway.qat.stg.snoonu.com/api/v1/order/order_history?page=1",
+    "pathname": "/api/v1/order/order_history",
+    "pathChunks": [
+      "api",
+      "v1",
+      "order",
+      "order_history"
+    ],
+    "status": 200,
+    "headers": {
+      "content-type": "application/json"
+    },
+    "body": {
+      "has_more_pages": false,
+      "history": [
+        {
+          "date": "",
+          "orders": [
+            {
+              "order_id": "25320",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-22T06:48:12.191303+00:00",
+              "order_details_json": {
+                "id": 25320,
+                "is_snoosend": true,
+                "title": "Documents",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": "20 QAR",
+                "total_price": "35 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Ash-Shahaniyah, Zone 80, الريان, Al Rayyan, Ар Раян, Αρ Ραϊάν, אראיאן, अर रायन, ラヤーン, Arajana, Ar Rayyan, Ar Rayyān, Ar-Rajjan, Ар-Райян, Ar Raqqah, Ар-Рајан, อาร์รอยยัน, 赖...ray, Qatar",
+                  "lat": 25.458009853320924,
+                  "lng": 51.1792017146945
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "06f6d69a-0c66-4ed4-9d05-942c9f969e1f",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false,
+                "subscription_benefits": {
+                  "s_plus_free_delivery_used": true
+                }
+              },
+              "cashback_amount": "3 QAR"
+            }
+          ]
+        },
+        {
+          "date": "19 Jun",
+          "orders": [
+            {
+              "order_id": "25256",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T18:26:33.335449+00:00",
+              "order_details_json": {
+                "id": 25256,
+                "is_snoosend": true,
+                "title": "Documents",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "20 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "4, Banks Street, Doha, Zone 06, Doha Municipality, Qatar",
+                  "lat": 25.28605871236297,
+                  "lng": 51.534817032516
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "44c481b8-056c-4e5f-b3c3-eab2a336e50b",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            },
+            {
+              "order_id": "25255",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T18:17:13.072228+00:00",
+              "order_details_json": {
+                "id": 25255,
+                "is_snoosend": true,
+                "title": "Personal things",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "25 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Pits, Losail International Circuit Road, Zone 70, Al Daayen Municipality, Qatar",
+                  "lat": 25.488495746334657,
+                  "lng": 51.45049978047609
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "e64718fe-d710-45d2-a931-a1b1cecfb2b0",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            },
+            {
+              "order_id": "25254",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T18:15:13.034675+00:00",
+              "order_details_json": {
+                "id": 25254,
+                "is_snoosend": true,
+                "title": "Food, Clothes",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "25 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Pits, Losail International Circuit Road, Zone 70, Al Daayen Municipality, Qatar",
+                  "lat": 25.488495746334657,
+                  "lng": 51.45049978047609
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "25b47d01-91ab-43ca-a5d3-62f1c45dff13",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            },
+            {
+              "order_id": "25253",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T18:11:22.365006+00:00",
+              "order_details_json": {
+                "id": 25253,
+                "is_snoosend": true,
+                "title": "مستندات",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "25 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Pits, Losail International Circuit Road, Zone 70, Al Daayen Municipality, Qatar",
+                  "lat": 25.4885714073793,
+                  "lng": 51.45049978047609
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "a9f8dad8-1549-4ceb-ac1d-dc0e4297325a",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            },
+            {
+              "order_id": "25250",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T15:56:32.548306+00:00",
+              "order_details_json": {
+                "id": 25250,
+                "is_snoosend": true,
+                "title": "Documents",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "25 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Pits, Losail International Circuit Road, Zone 70, Al Daayen Municipality, Qatar",
+                  "lat": 25.4885714073793,
+                  "lng": 51.45049978047609
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "da1af9aa-c33c-45a8-8a34-06e0046926d1",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            },
+            {
+              "order_id": "25249",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T15:55:40.038788+00:00",
+              "order_details_json": {
+                "id": 25249,
+                "is_snoosend": true,
+                "title": "Documents",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "25 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Pits, Losail International Circuit Road, Zone 70, Al Daayen Municipality, Qatar",
+                  "lat": 25.4885714073793,
+                  "lng": 51.45049978047609
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "545cb139-36f7-4015-b532-c0d65a14c280",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            },
+            {
+              "order_id": "25248",
+              "order_vertical": 2,
+              "sub_vertical_name": null,
+              "customer_id": 453108,
+              "created_at": "2026-06-19T15:54:48.638162+00:00",
+              "order_details_json": {
+                "id": 25248,
+                "is_snoosend": true,
+                "title": "Documents",
+                "status": {
+                  "order_status_id": 12,
+                  "status": "Cancelled 12:00 am",
+                  "order_tracking_status": null,
+                  "additional_text": null
+                },
+                "base_price": null,
+                "total_price": "25 QAR",
+                "can_reorder": false,
+                "pickup_address": {
+                  "address": "Pits, Losail International Circuit Road, Zone 70, Al Daayen Municipality, Qatar",
+                  "lat": 25.4885714073793,
+                  "lng": 51.45049978047609
+                },
+                "drop_off_address": {
+                  "address": "Marina Twin Towers B, 303, Lusail, Floor 11, Room 1112, لوسيل, منطقة 69, بلدية الظعاين, Qatar",
+                  "lat": 25.3865674,
+                  "lng": 51.5234844
+                },
+                "order_hash": "e4c353d8-aca5-4eb6-a12d-0d8bf871a86b",
+                "merchant_id": 7203,
+                "merchant_name": "Snoosend",
+                "merchant_english_name": "Snoosend",
+                "merchant_image_url": "https://images.snoonu.com/brand/header_image/2022-09/rQRgaI0gHl.png",
+                "is_food": false,
+                "business_unit_id": "62bd62492c12ab9b291acd91",
+                "main_category_id": "62987063dc53ce134c897c6f",
+                "is_self_pickup": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "createdAt": "2026-06-22T04:54:22.265Z",
+    "updatedAt": "2026-06-22T04:54:22.265Z"
   }
 ]

@@ -90,6 +90,46 @@ test("keeps disabled rules saved but ignores them for mock matching", async () =
   assert.equal(mockResponse.status, 404);
 });
 
+test("updates an existing rule name and enabled state", async () => {
+  const createResponse = await fetch(`${baseUrl}/api/rules`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      method: "GET",
+      name: "Enabled before edit",
+      enabled: true,
+      sourceUrl: "https://api.example.test/toggle-me",
+      pathname: "/toggle-me",
+      status: 209,
+      body: { active: true }
+    })
+  });
+
+  const created = await createResponse.json();
+  const updateResponse = await fetch(`${baseUrl}/api/rules`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      ...created,
+      name: "Disabled after edit",
+      enabled: false
+    })
+  });
+
+  assert.equal(updateResponse.status, 200);
+  const updated = await updateResponse.json();
+  assert.equal(updated.id, created.id);
+  assert.equal(updated.name, "Disabled after edit");
+  assert.equal(updated.enabled, false);
+
+  const rulesResponse = await fetch(`${baseUrl}/api/rules`);
+  const rules = await rulesResponse.json();
+  assert.equal(rules.filter((rule) => rule.id === created.id).length, 1);
+
+  const mockResponse = await fetch(`${baseUrl}/mock/toggle-me`);
+  assert.equal(mockResponse.status, 404);
+});
+
 test("does not use GET rules for non-GET requests", async () => {
   const response = await fetch(`${baseUrl}/mock/users/42`, { method: "POST" });
 
@@ -106,6 +146,64 @@ test("returns a 400 for invalid proxy targets", async () => {
 
   assert.equal(response.status, 400);
   assert.deepEqual(await response.json(), { error: "Proxy target must use http or https." });
+});
+
+test("proxies original-path requests when a proxy target header is present", async () => {
+  const upstream = createServer((req, res) => {
+    let body = "";
+    req.setEncoding("utf8");
+    req.on("data", (chunk) => {
+      body += chunk;
+    });
+    req.on("end", () => {
+      res.writeHead(201, { "content-type": "application/json" });
+      res.end(JSON.stringify({ url: req.url, body: JSON.parse(body) }));
+    });
+  });
+  await listenLocal(upstream);
+  const upstreamUrl = `http://127.0.0.1:${upstream.address().port}/orders/123`;
+
+  try {
+    const response = await fetch(`${baseUrl}/orders/123`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-mocker-url": upstreamUrl
+      },
+      body: JSON.stringify({ forwarded: true })
+    });
+
+    assert.equal(response.status, 201);
+    assert.equal(response.headers.get("x-mocker-hit"), "false");
+    assert.deepEqual(await response.json(), {
+      url: "/orders/123",
+      body: { forwarded: true }
+    });
+  } finally {
+    await new Promise((resolve, reject) => {
+      upstream.close((error) => (error ? reject(error) : resolve()));
+    });
+  }
+});
+
+test("returns a structured 502 when the upstream proxy request fails", async () => {
+  const upstream = await listenLocal(createServer((_req, res) => {
+    res.end("closing");
+  }));
+  const upstreamUrl = `http://127.0.0.1:${upstream.address().port}/disconnect`;
+
+  await new Promise((resolve, reject) => {
+    upstream.close((error) => (error ? reject(error) : resolve()));
+  });
+
+  const response = await fetch(`${baseUrl}/proxy?url=${encodeURIComponent(upstreamUrl)}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ test: true })
+  });
+
+  assert.equal(response.status, 502);
+  assert.deepEqual(await response.json(), { error: "Upstream request failed" });
 });
 
 test("omits content-length from app and mocked responses", async () => {

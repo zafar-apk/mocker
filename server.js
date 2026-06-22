@@ -11,9 +11,14 @@ const app = express();
 const port = Number(process.env.PORT || 3000);
 const requestLogLimit = Number(process.env.REQUEST_LOG_LIMIT || 100);
 const requestBodyPreviewLimit = Number(process.env.REQUEST_BODY_PREVIEW_LIMIT || 200_000);
+const proxyBodyLimit = process.env.PROXY_BODY_LIMIT || "100mb";
+const apiBodyLimit = process.env.API_BODY_LIMIT || "5mb";
 const requestLog = [];
+const proxyBodyParser = express.raw({ type: "*/*", limit: proxyBodyLimit });
 
 app.use((_req, res, next) => {
+  res.setHeader("Connection", "close");
+
   const setHeader = res.setHeader.bind(res);
   res.setHeader = (name, value) => {
     if (isContentLengthHeader(name)) {
@@ -34,6 +39,22 @@ app.use((_req, res, next) => {
   };
 
   next();
+});
+
+app.all("*", (req, res, next) => {
+  if (!isProxyRequest(req)) {
+    next();
+    return;
+  }
+
+  proxyBodyParser(req, res, (error) => {
+    if (error) {
+      next(error);
+      return;
+    }
+
+    handleProxy(req, res, next);
+  });
 });
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -105,11 +126,14 @@ function resolveProxyTarget(req) {
 
   const baseUrl = req.get("x-mocker-base-url");
   if (baseUrl) {
-    const suffix = req.originalUrl.replace(/^\/proxy/, "") || "/";
+    const suffix = req.originalUrl.replace(/^\/proxy(?=\/|$)/, "") || "/";
     return parseProxyUrl(suffix, baseUrl);
   }
 
-  throw new Error("Missing proxy target. Send X-Mocker-Url or ?url=<encoded original url>.");
+  throw Object.assign(
+    new Error("Missing proxy target. Send X-Mocker-Url or ?url=<encoded original url>."),
+    { statusCode: 400 }
+  );
 }
 
 function parseProxyUrl(value, base) {
@@ -150,6 +174,17 @@ function proxiedHeaders(req) {
   }
   headers["accept-encoding"] = "identity";
   return headers;
+}
+
+function isProxyRequest(req) {
+  const pathname = normalizePath(req.path);
+  return pathname === "/proxy"
+    || pathname.startsWith("/proxy/")
+    || Boolean(req.get("x-mocker-url"))
+    || Boolean(req.get("x-original-url"))
+    || Boolean(req.get("x-mocker-base-url"))
+    || Object.hasOwn(req.query, "url")
+    || Object.hasOwn(req.query, "target");
 }
 
 function sendMock(rule, res) {
@@ -198,7 +233,7 @@ function recordRequest(entry) {
   if (requestLog.length > requestLogLimit) requestLog.length = requestLogLimit;
 }
 
-app.all(["/proxy", "/proxy/*"], express.raw({ type: "*/*", limit: "20mb" }), async (req, res, next) => {
+async function handleProxy(req, res, next) {
   try {
     const target = resolveProxyTarget(req);
     const rules = await readRules();
@@ -221,12 +256,17 @@ app.all(["/proxy", "/proxy/*"], express.raw({ type: "*/*", limit: "20mb" }), asy
     }
 
     const shouldSendBody = !["GET", "HEAD"].includes(req.method.toUpperCase()) && req.body?.length;
-    const upstream = await fetch(target, {
-      method: req.method,
-      headers: proxiedHeaders(req),
-      body: shouldSendBody ? req.body : undefined,
-      redirect: "manual"
-    });
+    let upstream;
+    try {
+      upstream = await fetch(target, {
+        method: req.method,
+        headers: proxiedHeaders(req),
+        body: shouldSendBody ? req.body : undefined,
+        redirect: "manual"
+      });
+    } catch (error) {
+      throw Object.assign(error, { statusCode: 502, publicMessage: "Upstream request failed" });
+    }
 
     const responseHeaders = {};
     res.status(upstream.status);
@@ -250,19 +290,11 @@ app.all(["/proxy", "/proxy/*"], express.raw({ type: "*/*", limit: "20mb" }), asy
     res.set("x-mocker-hit", "false");
     res.send(responseBody);
   } catch (error) {
-    if (error.message?.startsWith("Missing proxy target")) {
-      res.status(400).json({ error: error.message });
-      return;
-    }
-    if (error.statusCode) {
-      res.status(error.statusCode).json({ error: error.message });
-      return;
-    }
     next(error);
   }
-});
+}
 
-app.use(express.json({ limit: "5mb" }));
+app.use(express.json({ limit: apiBodyLimit }));
 
 app.get("/api/requests", (_req, res) => {
   res.json(requestLog);
@@ -368,9 +400,30 @@ app.all("/mock/*", async (req, res, next) => {
   }
 });
 
-app.use((error, _req, res, _next) => {
+function statusForError(error) {
+  if (Number.isInteger(error.statusCode)) return error.statusCode;
+  if (Number.isInteger(error.status)) return error.status;
+  if (error.type === "entity.too.large") return 413;
+  if (error.type === "entity.parse.failed") return 400;
+  if (error.type === "request.aborted") return 400;
+  return 500;
+}
+
+function messageForError(error, statusCode) {
+  if (error.publicMessage) return error.publicMessage;
+  if (statusCode < 500 && error.message) return error.message;
+  return "Internal server error";
+}
+
+app.use((error, _req, res, next) => {
   console.error(error);
-  res.status(500).json({ error: "Internal server error" });
+  if (res.headersSent || res.destroyed) {
+    next(error);
+    return;
+  }
+
+  const statusCode = statusForError(error);
+  res.status(statusCode).json({ error: messageForError(error, statusCode) });
 });
 
 if (process.argv[1] === __filename) {
