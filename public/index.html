@@ -7,86 +7,160 @@
     <link rel="stylesheet" href="/styles.css">
   </head>
   <body>
-    <main class="shell">
+    <main class="app-shell">
       <aside class="sidebar">
         <div class="brand">
           <span class="brand-mark">M</span>
           <div>
             <h1>Mocker</h1>
-            <p>Local backend response rules</p>
+            <p>Local response rules</p>
           </div>
         </div>
 
-        <label class="field">
-          <span>Request URL</span>
-          <input id="urlInput" type="url" placeholder="https://api.example.com/users/42/orders">
-        </label>
+        <nav class="main-nav" aria-label="Main navigation">
+          <button class="nav-item active" type="button" data-view-target="rules">
+            <span class="nav-icon" aria-hidden="true">▦</span>
+            <span>Rules</span>
+          </button>
+          <button class="nav-item" type="button" data-view-target="monitor">
+            <span class="nav-icon" aria-hidden="true">◉</span>
+            <span>Request Monitor</span>
+            <span id="navRequestCount" class="nav-count">0</span>
+          </button>
+        </nav>
 
-        <label class="field">
-          <span>Rule name</span>
-          <input id="ruleNameInput" type="text" placeholder="Happy path, empty state, expired">
-        </label>
-
-        <div class="row">
-          <label class="field compact">
-            <span>Method</span>
-            <select id="methodInput">
-              <option>GET</option>
-              <option>POST</option>
-              <option>PUT</option>
-              <option>PATCH</option>
-              <option>DELETE</option>
-            </select>
-          </label>
-          <label class="field compact">
-            <span>Status</span>
-            <input id="statusInput" type="number" min="100" max="599" value="200">
-          </label>
-        </div>
-
-        <label class="check-field">
-          <input id="ruleEnabledInput" type="checkbox" checked>
-          <span>Rule enabled</span>
-        </label>
-
-        <section class="panel">
-          <div class="panel-title">Parsed path</div>
-          <div id="pathChips" class="chips empty">Paste a URL to split it into chunks.</div>
-        </section>
-
-        <section class="panel monitor-panel">
-          <div class="panel-head">
-            <div>
-              <div class="panel-title">Request monitor</div>
-              <div id="requestCount" class="panel-meta">Watching proxy and mock traffic</div>
-            </div>
-            <button id="clearRequestsBtn" class="secondary small-btn" type="button">Clear</button>
-          </div>
-          <div id="requestList" class="request-list"></div>
-        </section>
-
-        <section class="panel grow">
-          <div class="panel-title">Rules by name</div>
-          <div id="ruleList" class="rule-list"></div>
-        </section>
+        <button class="nav-item settings-link" type="button" data-view-target="settings">
+          <span class="nav-icon" aria-hidden="true">⚙</span>
+          <span>Settings</span>
+        </button>
       </aside>
 
-      <section class="workspace">
-        <div class="toolbar">
-          <div class="toolbar-actions">
-            <button id="formatBtn" class="secondary" type="button">Format JSON</button>
-            <button id="saveAsNewBtn" class="secondary" type="button">Save as new</button>
-            <button id="saveBtn" type="button">Save rule</button>
-          </div>
-        </div>
-
-        <section class="editor-grid">
-          <div class="json-source">
-            <div class="section-head">
-              <h2>Raw JSON</h2>
-              <button id="loadJsonBtn" class="secondary" type="button">Load into editor</button>
+      <section class="app-content">
+        <section id="rulesView" class="app-view active" data-view="rules">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Workspace</p>
+              <h2>Rules</h2>
+              <p>Manage local responses matched by request method and path.</p>
             </div>
-            <textarea id="jsonInput" spellcheck="false">{
+            <button id="newRuleBtn" type="button">+ New rule</button>
+          </header>
+
+          <section class="summary-grid" aria-label="Rule summary">
+            <article class="summary-card">
+              <span>Total rules</span>
+              <strong id="totalRulesCount">0</strong>
+            </article>
+            <article class="summary-card">
+              <span>Enabled</span>
+              <strong id="enabledRulesCount">0</strong>
+            </article>
+            <article class="summary-card">
+              <span>Recently matched</span>
+              <strong id="matchedRulesCount">0</strong>
+            </article>
+          </section>
+
+          <div class="filter-bar">
+            <label class="search-field">
+              <span class="sr-only">Search rules</span>
+              <input id="ruleSearchInput" type="search" placeholder="Search rules by name or path">
+            </label>
+            <label>
+              <span class="sr-only">Filter by method</span>
+              <select id="ruleMethodFilter">
+                <option value="">All methods</option>
+                <option>GET</option>
+                <option>POST</option>
+                <option>PUT</option>
+                <option>PATCH</option>
+                <option>DELETE</option>
+              </select>
+            </label>
+            <label>
+              <span class="sr-only">Filter by status</span>
+              <select id="ruleStatusFilter">
+                <option value="">All statuses</option>
+                <option value="2">2xx</option>
+                <option value="3">3xx</option>
+                <option value="4">4xx</option>
+                <option value="5">5xx</option>
+              </select>
+            </label>
+          </div>
+
+          <section class="table-card">
+            <div class="rule-table table-header" aria-hidden="true">
+              <span>Name</span>
+              <span>Method</span>
+              <span>Path</span>
+              <span>Status</span>
+              <span>Enabled</span>
+              <span>Last matched</span>
+              <span class="align-right">Actions</span>
+            </div>
+            <div id="ruleList" class="table-body"></div>
+          </section>
+        </section>
+
+        <section id="editorView" class="app-view editor-view" data-view="editor">
+          <header class="editor-header">
+            <div>
+              <button id="backToRulesBtn" class="text-button" type="button">← Back to rules</button>
+              <p class="eyebrow">Rule editor</p>
+              <h2 id="editorTitle">New rule</h2>
+              <p>Configure the request match and its local response.</p>
+            </div>
+            <span id="saveState" class="save-state">Unsaved</span>
+          </header>
+
+          <section class="rule-details-grid">
+            <label class="field rule-name-field">
+              <span>Rule name</span>
+              <input id="ruleNameInput" type="text" placeholder="Happy path, empty state, expired">
+            </label>
+            <label class="field url-field">
+              <span>Request URL</span>
+              <input id="urlInput" type="url" placeholder="https://api.example.com/users/42/orders">
+            </label>
+            <label class="field">
+              <span>Method</span>
+              <select id="methodInput">
+                <option>GET</option>
+                <option>POST</option>
+                <option>PUT</option>
+                <option>PATCH</option>
+                <option>DELETE</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Status</span>
+              <input id="statusInput" type="number" min="100" max="599" value="200">
+            </label>
+            <label class="switch-field">
+              <span>Rule state</span>
+              <span class="switch-control">
+                <input id="ruleEnabledInput" type="checkbox" checked>
+                <span class="switch" aria-hidden="true"></span>
+                <span id="ruleStateLabel">Enabled</span>
+              </span>
+            </label>
+          </section>
+
+          <section class="response-card">
+            <div class="response-tabs">
+              <div role="tablist" aria-label="Response editor">
+                <button id="visualTabBtn" class="response-tab active" type="button" role="tab" aria-selected="true">Visual builder</button>
+                <button id="rawTabBtn" class="response-tab" type="button" role="tab" aria-selected="false">Raw JSON</button>
+              </div>
+              <button id="formatBtn" class="secondary compact hidden" type="button">Format JSON</button>
+            </div>
+
+            <div id="visualPanel" class="response-panel active" role="tabpanel">
+              <div id="jsonTree" class="json-tree"></div>
+            </div>
+            <div id="rawPanel" class="response-panel raw-panel" role="tabpanel">
+              <textarea id="jsonInput" spellcheck="false">{
   "id": 1,
   "name": "Sample user",
   "active": true,
@@ -97,26 +171,139 @@
     }
   ]
 }</textarea>
-            <div id="jsonError" class="error" role="alert"></div>
-          </div>
+              <div id="jsonError" class="error" role="alert"></div>
+            </div>
+          </section>
 
-          <div class="interactive">
-            <div class="section-head">
-              <h2>Interactive JSON</h2>
-              <div class="endpoint-list">
-                <span id="mockUrl" class="mock-url"></span>
-                <span id="proxyUrl" class="mock-url"></span>
+          <details class="advanced-card">
+            <summary>
+              <span>
+                <strong>Advanced details</strong>
+                <small>Parsed path and generated local endpoints</small>
+              </span>
+              <span class="summary-chevron" aria-hidden="true">⌄</span>
+            </summary>
+            <div class="advanced-content">
+              <div>
+                <span class="detail-label">Parsed path</span>
+                <div id="pathChips" class="chips empty">Paste a URL to split it into chunks.</div>
+              </div>
+              <div class="endpoint-grid">
+                <div>
+                  <span class="detail-label">Mock endpoint</span>
+                  <code id="mockUrl">Available after entering a URL</code>
+                </div>
+                <div>
+                  <span class="detail-label">Proxy endpoint</span>
+                  <code id="proxyUrl">Available after entering a URL</code>
+                </div>
               </div>
             </div>
-            <div id="jsonTree" class="json-tree"></div>
+          </details>
+
+          <footer class="sticky-actions">
+            <button id="saveAsNewBtn" class="secondary" type="button">Save as new</button>
+            <button id="saveBtn" type="button">Save rule</button>
+          </footer>
+        </section>
+
+        <section id="monitorView" class="app-view" data-view="monitor">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Live traffic</p>
+              <h2>Request Monitor</h2>
+              <p id="requestCount">Watching proxy and mock traffic</p>
+            </div>
+            <button id="clearRequestsBtn" class="danger-outline" type="button">Clear requests</button>
+          </header>
+
+          <div class="filter-bar monitor-filters">
+            <label class="search-field">
+              <span class="sr-only">Search requests</span>
+              <input id="requestSearchInput" type="search" placeholder="Search requests by path">
+            </label>
+            <label>
+              <span class="sr-only">Filter requests by method</span>
+              <select id="requestMethodFilter">
+                <option value="">All methods</option>
+                <option>GET</option>
+                <option>POST</option>
+                <option>PUT</option>
+                <option>PATCH</option>
+                <option>DELETE</option>
+              </select>
+            </label>
+            <label>
+              <span class="sr-only">Filter requests by status</span>
+              <select id="requestStatusFilter">
+                <option value="">All statuses</option>
+                <option value="2">2xx</option>
+                <option value="3">3xx</option>
+                <option value="4">4xx</option>
+                <option value="5">5xx</option>
+              </select>
+            </label>
+            <label>
+              <span class="sr-only">Filter requests by source</span>
+              <select id="requestSourceFilter">
+                <option value="">All sources</option>
+                <option value="mocked">Mocked</option>
+                <option value="upstream">Upstream</option>
+              </select>
+            </label>
           </div>
+
+          <section class="monitor-grid">
+            <div class="table-card request-table-card">
+              <div class="request-table table-header" aria-hidden="true">
+                <span>Method</span>
+                <span>Status</span>
+                <span>Path</span>
+                <span>Source</span>
+                <span>Time</span>
+              </div>
+              <div id="requestList" class="table-body request-list"></div>
+            </div>
+
+            <aside id="requestDetail" class="request-detail">
+              <div class="empty-detail">
+                <span class="empty-icon" aria-hidden="true">◉</span>
+                <h3>Select a request</h3>
+                <p>Inspect its response and turn it into a reusable rule.</p>
+              </div>
+            </aside>
+          </section>
+        </section>
+
+        <section id="settingsView" class="app-view" data-view="settings">
+          <header class="page-header">
+            <div>
+              <p class="eyebrow">Workspace</p>
+              <h2>Settings</h2>
+              <p>Connection details for local Android development.</p>
+            </div>
+          </header>
+          <section class="settings-card">
+            <div>
+              <span class="detail-label">Web app</span>
+              <code>http://localhost:3000</code>
+            </div>
+            <div>
+              <span class="detail-label">Android emulator proxy</span>
+              <code>http://10.0.2.2:3000/proxy?url=&lt;encoded original URL&gt;</code>
+            </div>
+            <p>Rules and captured requests remain local to this Mocker instance.</p>
+          </section>
         </section>
       </section>
     </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
     <template id="addFieldTemplate">
       <form class="add-field">
-        <input name="name" placeholder="field name">
-        <input name="value" placeholder="field value">
+        <input name="name" placeholder="field name" aria-label="New field name">
+        <input name="value" placeholder="field value" aria-label="New field value">
         <button type="submit">Add</button>
       </form>
     </template>
