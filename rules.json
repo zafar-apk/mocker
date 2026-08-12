@@ -176,7 +176,7 @@
   {
     "id": "d8958a63-8a07-4fcc-8a20-3137efe55137",
     "name": "Snoosend Delivery options BANNER",
-    "enabled": true,
+    "enabled": false,
     "method": "POST",
     "sourceUrl": "https://snoodelivery-gateway.qat.stg.snoonu.com/api/v1/delivery/estimate",
     "pathname": "/api/v1/delivery/estimate",
@@ -243,12 +243,12 @@
       "is_success": true
     },
     "createdAt": "2026-06-18T16:53:00.768Z",
-    "updatedAt": "2026-06-18T16:53:00.768Z"
+    "updatedAt": "2026-07-16T05:47:41.035Z"
   },
   {
     "id": "df1adb0b-cee5-4a57-b220-8ec301065d6a",
     "name": "Tarriffs splus",
-    "enabled": true,
+    "enabled": false,
     "method": "POST",
     "sourceUrl": "https://snoodelivery-gateway.qat.stg.snoonu.com/api/v4/delivery/tariffs",
     "pathname": "/api/v4/delivery/tariffs",
@@ -289,12 +289,12 @@
       "is_success": true
     },
     "createdAt": "2026-06-17T11:44:31.587Z",
-    "updatedAt": "2026-06-18T15:37:04.995Z"
+    "updatedAt": "2026-07-16T05:47:41.719Z"
   },
   {
     "id": "ec785103-537a-457b-829c-5822e0dff7c7",
     "name": "Snoosend BENEFIT",
-    "enabled": true,
+    "enabled": false,
     "method": "GET",
     "sourceUrl": "https://gateway-splus.qat.stg.snoonu.com/api/v1/customer/subscription/benefits?IncludeCustomerBenefitUsages=true&types=5",
     "pathname": "/api/v1/customer/subscription/benefits",
@@ -328,12 +328,12 @@
       }
     ],
     "createdAt": "2026-06-17T12:33:12.409Z",
-    "updatedAt": "2026-06-18T16:52:17.940Z"
+    "updatedAt": "2026-07-16T05:47:39.759Z"
   },
   {
     "id": "ea8c915c-285c-4f4a-b029-8ae2961dc0c5",
     "name": "Splus discount in history",
-    "enabled": true,
+    "enabled": false,
     "method": "GET",
     "sourceUrl": "https://aggregationgateway.qat.stg.snoonu.com/api/v1/order/order_history?page=1",
     "pathname": "/api/v1/order/order_history",
@@ -687,6 +687,6 @@
       ]
     },
     "createdAt": "2026-06-22T04:54:22.265Z",
-    "updatedAt": "2026-06-22T04:54:22.265Z"
+    "updatedAt": "2026-07-16T05:47:40.613Z"
   }
 ]
